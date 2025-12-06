@@ -12,7 +12,9 @@ chrome.storage.sync.get(["memoryLimit", "toastPosition"], ({ memoryLimit, toastP
         chrome.storage.sync.set({ memoryLimit: normalizedLimit });
     }
 
-    limitInput.value = normalizedLimit;
+    const formattedLimit = Number(normalizedLimit);
+
+    limitInput.value = Number.isFinite(formattedLimit) ? formattedLimit.toString() : "";
     positionInput.value = toastPosition || "bottom-right";
 });
 
