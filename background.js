@@ -7,7 +7,14 @@ async function checkMemory() {
     const tab = tabs[0];
 
     chrome.storage.sync.get(["memoryLimit"], async ({ memoryLimit }) => {
-        const limit = memoryLimit || 1; // 1GB default
+        let limit = memoryLimit || 1024; // Default to 1024MB (1GB)
+        const isLegacyGBValue = memoryLimit && memoryLimit < 50;
+
+        if (isLegacyGBValue) {
+            limit = memoryLimit * 1024;
+
+            chrome.storage.sync.set({ memoryLimit: limit });
+        }
 
         chrome.system.memory.getInfo((info) => {
             // performance.memory is enabled
@@ -21,12 +28,12 @@ async function checkMemory() {
 
                     if (!usedBytes) return;
 
-                    const usedGB = usedBytes / 1024 / 1024 / 1024;
+                    const usedMB = usedBytes / 1024 / 1024;
 
-                    if (usedGB > limit) {
+                    if (usedMB > limit) {
                         chrome.tabs.sendMessage(tab.id, {
                             type: "MEMORY_ALERT",
-                            value: usedGB,
+                            value: usedMB,
                         });
                     }
                 },

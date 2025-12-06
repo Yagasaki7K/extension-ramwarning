@@ -5,7 +5,14 @@ const previewBtn = document.getElementById("preview");
 
 // Load existing settings
 chrome.storage.sync.get(["memoryLimit", "toastPosition"], ({ memoryLimit, toastPosition }) => {
-    limitInput.value = memoryLimit || 1;
+    let normalizedLimit = memoryLimit || 1024;
+
+    if (memoryLimit && memoryLimit < 50) {
+        normalizedLimit = memoryLimit * 1024;
+        chrome.storage.sync.set({ memoryLimit: normalizedLimit });
+    }
+
+    limitInput.value = normalizedLimit;
     positionInput.value = toastPosition || "bottom-right";
 });
 
@@ -23,7 +30,7 @@ previewBtn.onclick = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         chrome.tabs.sendMessage(tabs[0].id, {
             type: "MEMORY_ALERT",
-            value: 1.07, // Fake preview
+            value: 1100, // Fake preview in MB
         });
     });
 

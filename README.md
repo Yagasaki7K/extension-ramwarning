@@ -12,7 +12,7 @@ Perfect for developers, power users, or anyone who needs to monitor memory leaks
 - Monitors memory usage of the current browser tab
 - Toast notification when memory exceeds the configured limit
 - Customizable settings:
-    - Memory limit (in GB)
+- Memory limit (in MB)
     - Toast position (bottom-right, bottom-left, top-right, top-left)
 
 - Uses Chrome’s `performance.memory` API when available
@@ -63,7 +63,7 @@ Open the extension settings:
 
 From there you can:
 
-- Set memory threshold (default: **1 GB**)
+- Set memory threshold (default: **1024 MB (1 GB)**)
 - Choose toast notification position
 
 ### 2. View Memory Alerts
@@ -72,7 +72,7 @@ Simply browse any website.
 When the heap memory of the current tab exceeds your defined limit, you’ll see a toast like:
 
 ```
-⚠️ Memory usage: 1.07GB (exceeds limit)
+⚠️ Memory usage: 1100MB (exceeds limit)
 ```
 
 This toast has:
