@@ -3,30 +3,34 @@
 <head>
     <meta charset="UTF-8" />
     <title>Memory Watcher Options</title>
+    <link rel="stylesheet" href="options.css" />
 </head>
 <body>
-    <h2>Memory Watcher Settings</h2>
+    <div class="container">
+        <h1>Memory Watcher</h1>
 
-    <label>
-        Memory limit (GB):
-        <input id="limit" type="number" min="0.1" step="0.1" />
-    </label>
+        <div class="card">
+            <label class="field-label">Memory limit (GB)</label>
+            <input id="limit" type="number" min="0.1" step="0.1" class="input" />
+        </div>
 
-    <br /><br />
+        <div class="card">
+            <label class="field-label">Toast position</label>
+            <select id="position" class="select">
+                <option value="bottom-right">Bottom Right</option>
+                <option value="bottom-left">Bottom Left</option>
+                <option value="top-right">Top Right</option>
+                <option value="top-left">Top Left</option>
+            </select>
+        </div>
 
-    <label>
-        Toast position:
-        <select id="position">
-            <option value="bottom-right">Bottom Right</option>
-            <option value="bottom-left">Bottom Left</option>
-            <option value="top-right">Top Right</option>
-            <option value="top-left">Top Left</option>
-        </select>
-    </label>
+        <div class="button-row">
+            <button id="save" class="btn primary">Save Settings</button>
+            <button id="preview" class="btn warning">Test Preview</button>
+        </div>
 
-    <br /><br />
-
-    <button id="save">Salvar</button>
+        <p>by <a href="https://github.com/Yagasaki7K" target="_blank">GitHub/Yagasaki7K</a></p>
+    </div>
 
     <script src="options.js"></script>
 </body>
