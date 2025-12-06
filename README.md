@@ -1,4 +1,4 @@
-<center><img width="1915" height="959" alt="image" src="https://github.com/user-attachments/assets/9d8cfa0b-9a6d-4677-8ee5-1001b5f45571" /></center>
+<p align="center"><img width="1915" height="959" alt="image" src="https://github.com/user-attachments/assets/9d8cfa0b-9a6d-4677-8ee5-1001b5f45571" /></p>
 
 # **Memory Watcher – Chrome Extension**
 
@@ -77,7 +77,14 @@ When the heap memory of the current tab exceeds your defined limit, you’ll see
 ⚠️ Memory usage: 1100MB (exceeds limit)
 ```
 
-<center><img width="521" height="428" alt="image" src="https://github.com/user-attachments/assets/0ba582b1-20f0-4a92-a130-9ea8c02accc8" /></center>
+<p align="center">
+  <img 
+    src="https://github.com/user-attachments/assets/0ba582b1-20f0-4a92-a130-9ea8c02accc8" 
+    alt="Preview of Memory Watcher Extension"
+    width="521"
+    height="428"
+  />
+</p>
 
 This toast has:
 
