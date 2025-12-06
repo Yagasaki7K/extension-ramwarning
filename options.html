@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Memory Watcher Options</title>
+</head>
+<body>
+    <h2>Memory Watcher Settings</h2>
+
+    <label>
+        Memory limit (GB):
+        <input id="limit" type="number" min="0.1" step="0.1" />
+    </label>
+
+    <br /><br />
+
+    <label>
+        Toast position:
+        <select id="position">
+            <option value="bottom-right">Bottom Right</option>
+            <option value="bottom-left">Bottom Left</option>
+            <option value="top-right">Top Right</option>
+            <option value="top-left">Top Left</option>
+        </select>
+    </label>
+
+    <br /><br />
+
+    <button id="save">Salvar</button>
+
+    <script src="options.js"></script>
+</body>
+</html>
