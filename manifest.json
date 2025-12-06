@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Memory Watcher",
-    "version": "1.0.0",
+    "version": "1.2",
     "description": "Monitor the tab's memory usage and send toast-style alerts when it exceeds the configured limit.",
     "permissions": ["storage", "tabs", "system.memory"],
     "action": {
