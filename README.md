@@ -141,14 +141,3 @@ Go to the original repository and submit a PR describing:
 ## 📄 License
 
 MIT License — feel free to use, modify, and distribute.
-
----
-
-If you'd like, I can also:
-
-- Generate badges (shield.io)
-- Improve branding, logo, or screenshots
-- Create a ZIP release-ready package
-- Add a changelog or contribution guidelines (CONTRIBUTING.md)
-
-Just let me know!
