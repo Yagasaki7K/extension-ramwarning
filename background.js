@@ -1,45 +1,43 @@
-const CHECK_INTERVAL = 3000;
+const CHECK_INTERVAL_MS = 10_000;
 
-async function checkMemory() {
-    const tabs = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
-    if (!tabs.length) return;
+function normalizeLimit(limit) {
+    if (!Number.isFinite(limit)) return 1024;
 
-    const tab = tabs[0];
-
-    chrome.storage.sync.get(["memoryLimit"], async ({ memoryLimit }) => {
-        let limit = memoryLimit || 1024; // Default to 1024MB (1GB)
-        const isLegacyGBValue = memoryLimit && memoryLimit < 50;
-
-        if (isLegacyGBValue) {
-            limit = memoryLimit * 1024;
-
-            chrome.storage.sync.set({ memoryLimit: limit });
-        }
-
-        chrome.system.memory.getInfo((info) => {
-            // performance.memory is enabled
-            chrome.scripting.executeScript(
-                {
-                    target: { tabId: tab.id },
-                    func: () => (performance.memory ? performance.memory.usedJSHeapSize : null),
-                },
-                (result) => {
-                    const usedBytes = result?.[0]?.result;
-
-                    if (!usedBytes) return;
-
-                    const usedMB = usedBytes / 1024 / 1024;
-
-                    if (usedMB > limit) {
-                        chrome.tabs.sendMessage(tab.id, {
-                            type: "MEMORY_ALERT",
-                            value: usedMB,
-                        });
-                    }
-                },
-            );
-        });
-    });
+    return limit < 50 ? limit * 1024 : limit;
 }
 
-setInterval(checkMemory, CHECK_INTERVAL);
+async function fetchMemoryUsage(tabId) {
+    try {
+        const [result] = await chrome.scripting.executeScript({
+            target: { tabId },
+            func: () => performance?.memory?.usedJSHeapSize ?? null,
+        });
+
+        return result?.result ?? null;
+    } catch (error) {
+        console.warn("Memory Watcher: failed to read memory usage", error);
+        return null;
+    }
+}
+
+async function checkMemoryForActiveTab() {
+    const [activeTab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    if (!activeTab) return;
+
+    const { memoryLimit } = await chrome.storage.sync.get(["memoryLimit"]);
+    const limitMB = normalizeLimit(memoryLimit);
+    const usedBytes = await fetchMemoryUsage(activeTab.id);
+
+    if (!usedBytes) return;
+
+    const usedMB = usedBytes / 1024 / 1024;
+
+    if (usedMB > limitMB) {
+        chrome.tabs.sendMessage(activeTab.id, {
+            type: "MEMORY_ALERT",
+            value: usedMB,
+        });
+    }
+}
+
+setInterval(checkMemoryForActiveTab, CHECK_INTERVAL_MS);
