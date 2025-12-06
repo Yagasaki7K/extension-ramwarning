@@ -1,11 +1,10 @@
-const CHECK_INTERVAL = 3000;
+const CHECK_INTERVAL_MS = 10_000;
 
 let memoryLimitMB = 1024;
 let toastPosition = "bottom-right";
 
 function createToastContainer() {
     const existing = document.getElementById("memory-toast-container");
-
     if (existing) {
         existing.className = toastPosition;
         return existing;
@@ -14,7 +13,6 @@ function createToastContainer() {
     const container = document.createElement("div");
     container.id = "memory-toast-container";
     container.className = toastPosition;
-
     document.body.appendChild(container);
 
     return container;
@@ -47,30 +45,29 @@ function loadSettings() {
     chrome.storage.sync.get(["memoryLimit", "toastPosition"], ({ memoryLimit, toastPosition: storedPosition }) => {
         memoryLimitMB = normalizeLimit(memoryLimit);
         toastPosition = storedPosition || "bottom-right";
+        createToastContainer();
     });
 }
 
 async function getMemoryUsageMB() {
-    // Try the modern API first
+    if (performance?.memory?.usedJSHeapSize) {
+        return performance.memory.usedJSHeapSize / 1024 / 1024;
+    }
+
     if (performance.measureUserAgentSpecificMemory) {
         try {
             const result = await performance.measureUserAgentSpecificMemory();
-
             if (result?.bytes) return result.bytes / 1024 / 1024;
         } catch (err) {
-            // Fallback below
             console.warn("Memory Watcher: measureUserAgentSpecificMemory failed", err);
         }
     }
 
-    if (!performance.memory || !performance.memory.usedJSHeapSize) return null;
-
-    return performance.memory.usedJSHeapSize / 1024 / 1024;
+    return null;
 }
 
 async function checkMemoryUsage() {
     const usedMB = await getMemoryUsageMB();
-
     if (!usedMB) return;
 
     if (usedMB > memoryLimitMB) {
@@ -80,7 +77,7 @@ async function checkMemoryUsage() {
 
 function startMonitoring() {
     loadSettings();
-    setInterval(checkMemoryUsage, CHECK_INTERVAL);
+    setInterval(checkMemoryUsage, CHECK_INTERVAL_MS);
 }
 
 chrome.storage.onChanged.addListener((changes) => {
@@ -97,6 +94,11 @@ chrome.storage.onChanged.addListener((changes) => {
 chrome.runtime.onMessage.addListener((msg) => {
     if (msg.type === "MEMORY_ALERT") {
         showMemoryToast(msg.value);
+        return;
+    }
+
+    if (msg.type === "CHECK_MEMORY") {
+        checkMemoryUsage();
     }
 });
 

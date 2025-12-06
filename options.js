@@ -20,11 +20,15 @@ chrome.storage.sync.get(["memoryLimit", "toastPosition"], ({ memoryLimit, toastP
 
 // Save settings
 saveBtn.onclick = () => {
+    const parsedLimit = Number.parseFloat(limitInput.value);
+    const sanitizedLimit = Number.isFinite(parsedLimit) && parsedLimit > 0 ? parsedLimit : 1024;
+
     chrome.storage.sync.set({
-        memoryLimit: parseFloat(limitInput.value),
+        memoryLimit: sanitizedLimit,
         toastPosition: positionInput.value,
     });
 
+    limitInput.value = sanitizedLimit;
     showLocalToast("Settings saved!");
 };
 
