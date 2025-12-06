@@ -1,3 +1,5 @@
+<img width="1915" height="959" alt="image" src="https://github.com/user-attachments/assets/9d8cfa0b-9a6d-4677-8ee5-1001b5f45571" />
+
 # **Memory Watcher – Chrome Extension**
 
 Memory Watcher is a lightweight Google Chrome extension that monitors the **JavaScript heap memory usage** of the active tab and alerts the user when usage exceeds a configurable threshold.
@@ -75,6 +77,8 @@ When the heap memory of the current tab exceeds your defined limit, you’ll see
 ⚠️ Memory usage: 1100MB (exceeds limit)
 ```
 
+<img width="521" height="428" alt="image" src="https://github.com/user-attachments/assets/0ba582b1-20f0-4a92-a130-9ea8c02accc8" />
+
 This toast has:
 
 - Red background (#ff4444)
@@ -135,8 +139,6 @@ Go to the original repository and submit a PR describing:
 - What you changed
 - Why the change is useful
 - Any details needed for review
-
----
 
 ## 📄 License
 
