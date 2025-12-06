@@ -1,4 +1,4 @@
-<p align="center"><img width="1915" height="959" alt="image" src="https://github.com/user-attachments/assets/9d8cfa0b-9a6d-4677-8ee5-1001b5f45571" /></p>
+<p align="center"><img width="1915" height="959" alt="image" src="https://github.com/user-attachments/assets/4cf6ef12-d1df-43c8-86cf-45af62b3da47" /></p>
 
 # **Memory Watcher – Chrome Extension**
 
