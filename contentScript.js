@@ -18,7 +18,7 @@ function showMemoryToast(value) {
     const toast = document.createElement("div");
 
     toast.className = "memory-toast";
-    toast.innerHTML = `⚠️ <strong>Memory usage:</strong> ${value.toFixed(2)}GB (exceeds limit)`;
+    toast.innerHTML = `⚠️ <strong>Memory usage:</strong> ${value.toFixed(0)}MB (exceeds limit)`;
 
     container.appendChild(toast);
 
