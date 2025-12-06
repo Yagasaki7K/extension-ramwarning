@@ -4,6 +4,7 @@
     "version": "1.2",
     "description": "Monitor the tab's memory usage and send toast-style alerts when it exceeds the configured limit.",
     "permissions": ["storage", "tabs", "system.memory"],
+    "author": "Yagasaki7K",
     "action": {
         "default_title": "Memory Watcher Options",
         "default_popup": "options.html"
